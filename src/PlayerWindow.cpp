@@ -1,0 +1,106 @@
+#include <QApplication>
+#include <QSettings>
+#include <QDebug>
+#include <QLabel>
+
+#include "PlayerWindow.h"
+
+#include "./ui_player_window.h"
+
+
+PlayerWindow::PlayerWindow(QWidget *parent)
+        : QMainWindow(parent), ui(new Ui::PlayerWindow) {
+    ui->setupUi(this);
+
+    connect(RadioPlayer::getInstance(), &RadioPlayer::radioPlayerStateChanged, this,
+            &PlayerWindow::onRadioPlayerStateChanged);
+    onRadioPlayerStateChanged(RadioPlayer::getInstance()->getRadioPlayerState());  // init
+    connect(PlayList::getInstance(), &PlayList::radioStationChanged, this, &PlayerWindow::onRadioStationChanged);
+    onRadioStationChanged(*(PlayList::getInstance()->selectedRadioStation));  // init
+    connect(qApp, &QApplication::aboutToQuit, this, &PlayerWindow::onAppClose);
+    connect(ui->playerControlButton, &QPushButton::clicked, RadioPlayer::getInstance(),
+            &RadioPlayer::toggleRadioPlayerState);
+    connect(ui->nationalListWidget, &QListWidget::itemClicked, this, &PlayerWindow::selectNewRadioStation);
+    connect(ui->regionalListWidget, &QListWidget::itemClicked, this, &PlayerWindow::selectNewRadioStation);
+    connect(ui->volumeSlider, &QSlider::valueChanged, RadioPlayer::getInstance(), &RadioPlayer::setVolume);
+    connect(RadioPlayer::getInstance(), &RadioPlayer::volumeChanged, ui->volumeSlider, &QSlider::setValue);
+    connect(RadioPlayer::getInstance(), &RadioPlayer::volumeChanged, ui->volumeLabel,
+            QOverload<int>::of(&QLabel::setNum));
+
+    ui->volumeSlider->setValue(RadioPlayer::getInstance()->getVolume());
+    ui->volumeLabel->setNum(RadioPlayer::getInstance()->getVolume());
+
+    // style regional and national list widget
+    ui->nationalListWidget->setLayoutDirection(Qt::LayoutDirection::RightToLeft);
+    ui->regionalListWidget->setLayoutDirection(Qt::LayoutDirection::RightToLeft);
+    ui->nationalListWidget->setIconSize(QSize(48, 48));
+    ui->regionalListWidget->setIconSize(QSize(48, 48));
+    QFont font = ui->nationalListWidget->font();
+    font.setPointSize(10);
+    ui->nationalListWidget->setFont(font);
+    ui->regionalListWidget->setFont(font);
+
+    PlayList *playList = PlayList::getInstance();
+    for (const auto &element: playList->getNationalRadioStations()) {
+        auto listWidgetItem = new QListWidgetItem(QIcon(":/img/icon"), element.name);
+        listWidgetItem->setData(Qt::UserRole, element.channelID);
+        ui->nationalListWidget->addItem(listWidgetItem);
+    }
+
+    for (const auto &element: playList->getRegionalRadioStations()) {
+        auto listWidgetItem = new QListWidgetItem(QIcon(":/img/icon"), element.name);
+        listWidgetItem->setData(Qt::UserRole, element.channelID);
+        ui->regionalListWidget->addItem(listWidgetItem);
+    }
+}
+
+PlayerWindow::~PlayerWindow() {
+    delete ui;
+}
+
+void PlayerWindow::closeEvent(QCloseEvent *event) {
+    QSettings settings;
+    settings.beginGroup("player-window");
+    settings.setValue("size", size());
+    settings.setValue("pos", pos());
+    settings.endGroup();
+
+    QMainWindow::closeEvent(event);
+    event->accept();
+    qDebug() << "Player windows is closed and its geometry is saved";
+}
+
+void PlayerWindow::onAppClose() {
+    close();  // to save geometry
+}
+
+void PlayerWindow::showEvent(QShowEvent *event) {
+    QSettings settings;
+    settings.beginGroup("player-window");
+    if (settings.contains("size") && settings.contains("pos")) {
+        resize(settings.value("size").toSize());
+        move(settings.value("pos").toPoint());
+    }
+    settings.endGroup();
+
+    QMainWindow::showEvent(event);
+    event->accept();
+}
+
+void PlayerWindow::selectNewRadioStation(QListWidgetItem *item) {
+    PlayList::getInstance()->setCurrentRadioStation(item->data(Qt::UserRole).toInt());
+}
+
+void PlayerWindow::onRadioStationChanged(const RadioStation &rs) {
+    ui->currentStationLabel->setText(rs.name);
+}
+
+void PlayerWindow::onRadioPlayerStateChanged(QMediaPlayer::State state) {
+    if (state == QMediaPlayer::State::PlayingState) {
+        ui->playerControlButton->setText("Stop");
+        ui->playerControlButton->setIcon(QIcon(":/img/stop"));
+    } else {
+        ui->playerControlButton->setText("Play");
+        ui->playerControlButton->setIcon(QIcon(":/img/play"));
+    }
+}
