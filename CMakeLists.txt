@@ -51,7 +51,11 @@ else ()
         add_library(IranRadio SHARED
                 ${PROJECT_SOURCES}
                 )
-    else ()
+    elseif (WIN32)
+        add_executable(IranRadio WIN32
+                ${PROJECT_SOURCES}
+                )
+    else()
         add_executable(IranRadio
                 ${PROJECT_SOURCES}
                 )
