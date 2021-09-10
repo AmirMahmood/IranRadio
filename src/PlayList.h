@@ -11,7 +11,7 @@ enum class RadioStationType {
 struct RadioStation {
     QString name;
     QString streamURL;
-    QString IconURL;
+    QString iconURL;
     RadioStationType type;
     int channelID;
 };

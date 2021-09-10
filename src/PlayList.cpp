@@ -29,10 +29,14 @@ PlayList::PlayList() {
     QVector<RadioStation> vec1;
     for (const auto &element: nationalsData) {
         auto jo = element.toObject();
+        QString iconURL = jo["icon-url"].toString();
+        QString tmpIconName = iconURL.right(iconURL.length() - iconURL.lastIndexOf("/") - 1);
+        QString stationIconName = tmpIconName.left(tmpIconName.indexOf("?"));
         RadioStation rs{
                 jo["name"].toString(),
                 jo["stream-url"].toString(),
-                jo["icon-url"].toString(),
+                //jo["icon-url"].toString(),
+                "./resources/other/stations_icon/" + stationIconName,
                 RadioStationType::National,
                 jo["channel-id"].toInt(),
         };
@@ -43,10 +47,14 @@ PlayList::PlayList() {
     QVector<RadioStation> vec2;
     for (const auto &element: regionalsData) {
         auto jo = element.toObject();
+        QString iconURL = jo["icon-url"].toString();
+        QString tmpIconName = iconURL.right(iconURL.length() - iconURL.lastIndexOf("/") - 1);
+        QString stationIconName = tmpIconName.left(tmpIconName.indexOf("?"));
         RadioStation rs{
                 jo["name"].toString(),
                 jo["stream-url"].toString(),
-                jo["icon-url"].toString(),
+                //jo["icon-url"].toString(),
+                "./resources/other/stations_icon/" + stationIconName,
                 RadioStationType::Regional,
                 jo["channel-id"].toInt(),
         };
