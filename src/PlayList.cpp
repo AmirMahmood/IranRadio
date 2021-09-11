@@ -34,7 +34,6 @@ PlayList::PlayList() {
         QString stationIconName = tmpIconName.left(tmpIconName.indexOf("?"));
         RadioStation rs{
                 jo["name"].toString(),
-                jo["stream-url"].toString(),
                 //jo["icon-url"].toString(),
                 "./resources/other/stations_icon/" + stationIconName,
                 RadioStationType::National,
@@ -52,7 +51,6 @@ PlayList::PlayList() {
         QString stationIconName = tmpIconName.left(tmpIconName.indexOf("?"));
         RadioStation rs{
                 jo["name"].toString(),
-                jo["stream-url"].toString(),
                 //jo["icon-url"].toString(),
                 "./resources/other/stations_icon/" + stationIconName,
                 RadioStationType::Regional,

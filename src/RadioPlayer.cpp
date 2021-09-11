@@ -1,6 +1,12 @@
 #include <QSettings>
 #include <QApplication>
+#include <QUrlQuery>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+
 #include "RadioPlayer.h"
+#include "NetworkManager.h"
 
 
 RadioPlayer *RadioPlayer::s_instance = nullptr;
@@ -51,7 +57,20 @@ void RadioPlayer::play() {
 
 void RadioPlayer::changeStreamSource(const RadioStation &rs) {
     stop();
-    currentStream = rs.streamURL;
+
+    auto url = QUrl("http://api.iranseda.ir/radio/liveplayer/");
+    QUrlQuery querystr;
+    querystr.addQueryItem("CH", QString::number(rs.channelID));
+    url.setQuery(querystr);
+    QNetworkReply *reply = NetworkManager::getInstance()->getJson(url);
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec(); // wait until QNetworkReply emits finished signal
+    QJsonDocument json = QJsonDocument::fromJson(reply->readAll());
+    reply->close();
+    reply->deleteLater();
+    currentStream = json["items"].toArray()[0].toObject()["playUrl"].toString();
+
     play();
 }
 
