@@ -20,7 +20,14 @@ QNetworkReply *NetworkManager::getJson(const QString &url) {
     /*
      * always call close and deleteLater functions after using QNetworkReply object
      */
-    QNetworkRequest request{QUrl(url)};
+    return getJson(QUrl(url));
+}
+
+QNetworkReply *NetworkManager::getJson(const QUrl &url) {
+    /*
+     * always call close and deleteLater functions after using QNetworkReply object
+     */
+    QNetworkRequest request{url};
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application / json");
     qDebug() << "New HTTP request is sent";
     return restClient->get(request);

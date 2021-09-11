@@ -10,6 +10,7 @@ class NetworkManager : public QObject {
 Q_OBJECT
 public:
     QNetworkReply *getJson(const QString &url);
+    QNetworkReply *getJson(const QUrl &url);
 
     static NetworkManager *getInstance();
 
