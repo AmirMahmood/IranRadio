@@ -35,6 +35,7 @@ set(PROJECT_SOURCES
         src/RadioPlayer.cpp
         src/PlayList.cpp
         src/SystemTry.cpp
+        src/NetworkManager.cpp
         src/player_window.ui
         resource.qrc
         ${TS_FILES}
