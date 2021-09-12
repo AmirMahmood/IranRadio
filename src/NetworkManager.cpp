@@ -15,6 +15,7 @@ NetworkManager *NetworkManager::getInstance() {
 
 NetworkManager::NetworkManager() {
     restClient = new QNetworkAccessManager(this);
+    restClient->setRedirectPolicy(QNetworkRequest::RedirectPolicy::NoLessSafeRedirectPolicy);
     diskCache = new QNetworkDiskCache(this);
     diskCache->setCacheDirectory(
             QStandardPaths::writableLocation(QStandardPaths::StandardLocation::AppDataLocation)
