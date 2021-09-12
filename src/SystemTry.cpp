@@ -64,7 +64,7 @@ void SystemTry::makeStationMenus() {
     PlayList *playList = PlayList::getInstance();
     for (const auto &element: playList->getNationalRadioStations()) {
         nationalStationsMenu->addAction(
-                QIcon(element.iconURL),
+                //QIcon(element.iconURL),
                 element.name,
                 PlayList::getInstance(),
                 [=]() { PlayList::getInstance()->setCurrentRadioStation(element.type, element.channelID); }
@@ -73,7 +73,7 @@ void SystemTry::makeStationMenus() {
 
     for (const auto &element: playList->getRegionalRadioStations()) {
         regionalStationsMenu->addAction(
-                QIcon(element.iconURL),
+                //QIcon(element.iconURL),
                 element.name,
                 PlayList::getInstance(),
                 [=]() { PlayList::getInstance()->setCurrentRadioStation(element.type, element.channelID); }

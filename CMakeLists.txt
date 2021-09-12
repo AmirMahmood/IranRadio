@@ -36,6 +36,7 @@ set(PROJECT_SOURCES
         src/PlayList.cpp
         src/SystemTry.cpp
         src/NetworkManager.cpp
+        src/CustomListWidgetItem.cpp
         src/player_window.ui
         resource.qrc
         ${TS_FILES}
@@ -66,11 +67,6 @@ else ()
 endif ()
 
 target_link_libraries(IranRadio PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Multimedia)
-
-# copy resources to build dir
-add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_SOURCE_DIR}/resources/other $<TARGET_FILE_DIR:${PROJECT_NAME}>/resources/other)
 
 if (CLION)
     if (WIN32)

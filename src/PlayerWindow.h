@@ -6,8 +6,8 @@
 #include <QCloseEvent>
 #include <QShowEvent>
 #include <QMediaPlayer>
-#include <QListWidgetItem>
 
+#include "CustomListWidgetItem.h"
 #include "PlayList.h"
 #include "RadioPlayer.h"
 

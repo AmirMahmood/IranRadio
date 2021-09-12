@@ -2,10 +2,12 @@
 #include <QSettings>
 #include <QDebug>
 #include <QLabel>
+#include <QNetworkReply>
 
 #include "PlayerWindow.h"
 
 #include "./ui_player_window.h"
+#include "NetworkManager.h"
 
 
 PlayerWindow::PlayerWindow(QWidget *parent)
@@ -42,13 +44,13 @@ PlayerWindow::PlayerWindow(QWidget *parent)
 
     PlayList *playList = PlayList::getInstance();
     for (const auto &element: playList->getNationalRadioStations()) {
-        auto listWidgetItem = new QListWidgetItem(QIcon(element.iconURL), element.name);
+        auto listWidgetItem = new CustomListWidgetItem(QUrl(element.iconURL), element.name);
         listWidgetItem->setData(Qt::UserRole, element.channelID);
         ui->nationalListWidget->addItem(listWidgetItem);
     }
 
     for (const auto &element: playList->getRegionalRadioStations()) {
-        auto listWidgetItem = new QListWidgetItem(QIcon(element.iconURL), element.name);
+        auto listWidgetItem = new CustomListWidgetItem(QUrl(element.iconURL), element.name);
         listWidgetItem->setData(Qt::UserRole, element.channelID);
         ui->regionalListWidget->addItem(listWidgetItem);
     }
@@ -93,9 +95,15 @@ void PlayerWindow::selectNewRadioStation(QListWidgetItem *item) {
 
 void PlayerWindow::onRadioStationChanged(const RadioStation &rs) {
     ui->currentStationLabel->setText(rs.name);
+    QNetworkReply *reply = NetworkManager::getInstance()->getFile(QUrl(rs.iconURL));
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec();
+    QPixmap p;
+    p.loadFromData(reply->readAll());
     ui->currentStationIconLabel->setPixmap(
-                QPixmap(rs.iconURL).scaled(48, 48, Qt::IgnoreAspectRatio, Qt::SmoothTransformation)
-                );
+            p.scaled(48, 48, Qt::IgnoreAspectRatio, Qt::SmoothTransformation)
+    );
 }
 
 void PlayerWindow::onRadioPlayerStateChanged(QMediaPlayer::State state) {
