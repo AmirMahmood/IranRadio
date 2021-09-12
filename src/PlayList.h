@@ -24,6 +24,8 @@ public:
 
     QVector<RadioStation> getRegionalRadioStations();
 
+    void getNewPlaylistFromAPI();
+
     static PlayList *getInstance();
 
 public slots:

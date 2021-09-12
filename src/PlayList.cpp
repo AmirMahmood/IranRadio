@@ -6,6 +6,7 @@
 #include <QSettings>
 
 #include "PlayList.h"
+#include "NetworkManager.h"
 
 PlayList *PlayList::s_instance = nullptr;
 
@@ -21,46 +22,7 @@ PlayList::PlayList() {
     selectedRadioStation = new RadioStation;
     stationsList = new QVector<QVector<RadioStation>>;
 
-    QFile file("./resources/other/stations.json");
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
-    QJsonObject data = QJsonDocument::fromJson(file.readAll()).object();
-
-    QJsonArray nationalsData = data["Nationals"].toArray();
-    QVector<RadioStation> vec1;
-    for (const auto &element: nationalsData) {
-        auto jo = element.toObject();
-        QString iconURL = jo["icon-url"].toString();
-        QString tmpIconName = iconURL.right(iconURL.length() - iconURL.lastIndexOf("/") - 1);
-        QString stationIconName = tmpIconName.left(tmpIconName.indexOf("?"));
-        RadioStation rs{
-                jo["name"].toString(),
-                //jo["icon-url"].toString(),
-                "./resources/other/stations_icon/" + stationIconName,
-                RadioStationType::National,
-                jo["channel-id"].toInt(),
-        };
-        vec1.push_back(rs);
-    }
-
-    QJsonArray regionalsData = data["Regionals"].toArray();
-    QVector<RadioStation> vec2;
-    for (const auto &element: regionalsData) {
-        auto jo = element.toObject();
-        QString iconURL = jo["icon-url"].toString();
-        QString tmpIconName = iconURL.right(iconURL.length() - iconURL.lastIndexOf("/") - 1);
-        QString stationIconName = tmpIconName.left(tmpIconName.indexOf("?"));
-        RadioStation rs{
-                jo["name"].toString(),
-                //jo["icon-url"].toString(),
-                "./resources/other/stations_icon/" + stationIconName,
-                RadioStationType::Regional,
-                jo["channel-id"].toInt(),
-        };
-        vec2.push_back(rs);
-    }
-
-    stationsList->push_back(vec1);
-    stationsList->push_back(vec2);
+    getNewPlaylistFromAPI();
 
     connect(qApp, &QApplication::aboutToQuit, this, &PlayList::onAppClose);
 
@@ -125,4 +87,38 @@ QVector<RadioStation> PlayList::getNationalRadioStations() {
 
 QVector<RadioStation> PlayList::getRegionalRadioStations() {
     return stationsList->at(1);
+}
+
+void PlayList::getNewPlaylistFromAPI() {
+    QNetworkReply *reply = NetworkManager::getInstance()->getJson("http://api.iranseda.ir/radio/");
+    QEventLoop loop;
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+    loop.exec(); // wait until QNetworkReply emits finished signal
+
+    QJsonDocument json = QJsonDocument::fromJson(reply->readAll());
+    reply->close();
+    reply->deleteLater();
+    QVector<RadioStation> vec1;
+    QVector<RadioStation> vec2;
+    for (const auto &element: json["channels"].toArray()) {
+        auto jo = element.toObject();
+        QString iconURL = jo["logo"].toString();
+        QString tmpIconName = iconURL.right(iconURL.length() - iconURL.lastIndexOf("/") - 1);
+        QString stationIconName = tmpIconName.left(tmpIconName.indexOf("?"));
+        RadioStation rs{
+                jo["title"].toString(),
+                jo["logo"].toString(),
+                RadioStationType::National,
+                jo["id"].toString().toInt(),
+                //jo["name"].toString(),
+        };
+        if (jo["type"].toString().compare("ostani", Qt::CaseSensitivity::CaseInsensitive) == 0) {
+            rs.type = RadioStationType::Regional;
+            vec2.push_back(rs);
+        } else {
+            vec1.push_back(rs);
+        }
+    }
+    stationsList->push_back(vec1);
+    stationsList->push_back(vec2);
 }
