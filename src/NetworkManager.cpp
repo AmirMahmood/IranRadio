@@ -39,3 +39,9 @@ QNetworkReply *NetworkManager::getJson(const QUrl &url) {
     qDebug() << "New HTTP request is sent";
     return restClient->get(request);
 }
+
+QNetworkReply *NetworkManager::getFile(const QUrl &url) {
+    QNetworkRequest request{url};
+    request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
+    return restClient->get(request);
+}
