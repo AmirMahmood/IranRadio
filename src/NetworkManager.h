@@ -5,6 +5,7 @@
 #include <QNetworkAccessManager>
 
 #include <QObject>
+#include <QNetworkDiskCache>
 
 class NetworkManager : public QObject {
 Q_OBJECT
@@ -19,6 +20,7 @@ private:
     static NetworkManager *s_instance;
 
     QNetworkAccessManager *restClient;
+    QNetworkDiskCache *diskCache;
 };
 
 #endif // NETWORKMANAGER_H
