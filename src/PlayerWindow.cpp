@@ -60,16 +60,29 @@ PlayerWindow::~PlayerWindow() {
     delete ui;
 }
 
-void PlayerWindow::closeEvent(QCloseEvent *event) {
+void PlayerWindow::saveWindowGeometry() {
     QSettings settings;
     settings.beginGroup("player-window");
     settings.setValue("size", size());
     settings.setValue("pos", pos());
     settings.endGroup();
+}
 
+void PlayerWindow::closeEvent(QCloseEvent *event) {
+    saveWindowGeometry();
     QMainWindow::closeEvent(event);
     event->accept();
     qDebug() << "Player windows is closed and its geometry is saved";
+}
+
+void PlayerWindow::changeEvent(QEvent *event) {
+    if (event->type() == QEvent::WindowStateChange) {
+        if (windowState() & Qt::WindowMinimized) {
+            saveWindowGeometry();
+            event->ignore();
+            hide();
+        }
+    }
 }
 
 void PlayerWindow::onAppClose() {

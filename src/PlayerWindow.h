@@ -36,9 +36,13 @@ public slots:
 
 private:
 
+    void changeEvent(QEvent *event) override;
+
     void closeEvent(QCloseEvent *event) override;
 
     void showEvent(QShowEvent *event) override;
+
+    void saveWindowGeometry();
 
     Ui::PlayerWindow *ui;
 };
