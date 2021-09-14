@@ -86,6 +86,7 @@ void PlayerWindow::showEvent(QShowEvent *event) {
     settings.endGroup();
 
     QMainWindow::showEvent(event);
+    setWindowState(windowState() & ~Qt::WindowMinimized | Qt::WindowActive);
     event->accept();
 }
 
