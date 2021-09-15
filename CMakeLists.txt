@@ -39,6 +39,7 @@ else ()
     if (WIN32)
         add_executable(IranRadio WIN32
                 ${PROJECT_SOURCES}
+                ./resources/win32IranRadio.rc
                 )
     else()
         add_executable(IranRadio
