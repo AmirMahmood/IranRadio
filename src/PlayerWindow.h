@@ -34,6 +34,8 @@ public slots:
 
     void selectNewRadioStation(QListWidgetItem *item);
 
+    void onTryIconClicked();
+
 private:
 
     void changeEvent(QEvent *event) override;

@@ -50,6 +50,8 @@ SystemTry::SystemTry(QObject *parent) {
     // init currentStationAction text
     onRadioStationChanged(*(PlayList::getInstance()->selectedRadioStation));
 
+    connect(trayIcon, &QSystemTrayIcon::activated, this, &SystemTry::tryIconClicked);
+
     trayIcon->setContextMenu(trayMenu);
 
     trayIcon->show();
@@ -97,4 +99,15 @@ void SystemTry::showPlayerWindow() {
         playerWindow = new PlayerWindow();
     }
     playerWindow->show();
+}
+
+void SystemTry::tryIconClicked(QSystemTrayIcon::ActivationReason reason)
+{
+    if (reason == QSystemTrayIcon::ActivationReason::Trigger){
+        if (playerWindow == nullptr){
+            showPlayerWindow();
+        } else {
+            playerWindow->onTryIconClicked();
+        }
+    }
 }

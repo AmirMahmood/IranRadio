@@ -60,6 +60,14 @@ PlayerWindow::~PlayerWindow() {
     delete ui;
 }
 
+void PlayerWindow::onTryIconClicked() {
+    if (isVisible()) {
+        close();
+    } else {
+        show();
+    }
+}
+
 void PlayerWindow::saveWindowGeometry() {
     QSettings settings;
     settings.beginGroup("player-window");
