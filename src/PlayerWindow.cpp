@@ -122,10 +122,10 @@ void PlayerWindow::onRadioStationChanged(const RadioStation &rs) {
 
 void PlayerWindow::onRadioPlayerStateChanged(QMediaPlayer::State state) {
     if (state == QMediaPlayer::State::PlayingState) {
-        ui->playerControlButton->setText("Stop");
+        ui->playerControlButton->setText(tr("Stop"));
         ui->playerControlButton->setIcon(QIcon(":/img/stop"));
     } else {
-        ui->playerControlButton->setText("Play");
+        ui->playerControlButton->setText(tr("Play"));
         ui->playerControlButton->setIcon(QIcon(":/img/play"));
     }
 }

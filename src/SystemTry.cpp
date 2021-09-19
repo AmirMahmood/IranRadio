@@ -10,14 +10,14 @@ SystemTry::SystemTry(QObject *parent) {
     currentStationAction = trayMenu->addAction("");
     currentStationAction->setDisabled(true);
     trayMenu->addSeparator();
-    mediaControllerAction = trayMenu->addAction(QIcon(":/img/play"), "Play", RadioPlayer::getInstance(),
+    mediaControllerAction = trayMenu->addAction(QIcon(":/img/play"), tr("Play"), RadioPlayer::getInstance(),
                                                 &RadioPlayer::toggleRadioPlayerState);
     trayMenu->addSeparator();
-    nationalStationsMenu = trayMenu->addMenu("Nationals");
-    regionalStationsMenu = trayMenu->addMenu("Regionals");
+    nationalStationsMenu = trayMenu->addMenu(tr("Nationals"));
+    regionalStationsMenu = trayMenu->addMenu(tr("Regionals"));
     makeStationMenus();
     trayMenu->addSeparator();
-    auto volumeMenu = trayMenu->addMenu("Change volume");
+    auto volumeMenu = trayMenu->addMenu(tr("Change volume"));
     volumeMenu->addAction(
             "100%",
             RadioPlayer::getInstance(),
@@ -38,8 +38,8 @@ SystemTry::SystemTry(QObject *parent) {
             RadioPlayer::getInstance(),
             [=]() { RadioPlayer::getInstance()->setVolume(25); }
     );
-    trayMenu->addAction("Show player", this, &SystemTry::showPlayerWindow);
-    QAction *exitAction = trayMenu->addAction("Exit");
+    trayMenu->addAction(tr("Show player"), this, &SystemTry::showPlayerWindow);
+    QAction *exitAction = trayMenu->addAction(tr("Exit"));
 
     connect(exitAction, &QAction::triggered, this, &qApp->quit);
     connect(RadioPlayer::getInstance(), &RadioPlayer::radioPlayerStateChanged, this,
@@ -83,10 +83,10 @@ void SystemTry::makeStationMenus() {
 
 void SystemTry::onRadioPlayerStateChanged(QMediaPlayer::State state) {
     if (state == QMediaPlayer::State::PlayingState) {
-        mediaControllerAction->setText("Stop");
+        mediaControllerAction->setText(tr("Stop"));
         mediaControllerAction->setIcon(QIcon(":/img/stop"));
     } else {
-        mediaControllerAction->setText("Play");
+        mediaControllerAction->setText(tr("Play"));
         mediaControllerAction->setIcon(QIcon(":/img/play"));
     }
 }
