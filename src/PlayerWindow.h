@@ -36,6 +36,10 @@ public slots:
 
     void onTryIconClicked();
 
+private slots:
+
+    void showSettingsDialog();
+
 private:
 
     void changeEvent(QEvent *event) override;

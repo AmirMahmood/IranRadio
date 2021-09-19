@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QLabel>
 #include <QNetworkReply>
+#include <QMenu>
 
 #include "PlayerWindow.h"
 
@@ -13,6 +14,11 @@
 PlayerWindow::PlayerWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::PlayerWindow) {
     ui->setupUi(this);
+
+    auto menu = new QMenu(this);
+    ui->menuToolButton->setMenu(menu);
+    menu->addAction(tr("Settings"), this, &PlayerWindow::showSettingsDialog);
+    menu->addAction(tr("Exit"),  this, &qApp->quit);
 
     connect(RadioPlayer::getInstance(), &RadioPlayer::radioPlayerStateChanged, this,
             &PlayerWindow::onRadioPlayerStateChanged);
@@ -136,4 +142,8 @@ void PlayerWindow::onRadioPlayerStateChanged(QMediaPlayer::State state) {
         ui->playerControlButton->setText(tr("Play"));
         ui->playerControlButton->setIcon(QIcon(":/img/play"));
     }
+}
+
+void PlayerWindow::showSettingsDialog() {
+
 }

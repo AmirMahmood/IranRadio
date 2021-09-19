@@ -3,6 +3,7 @@
         <file alias="stop">resources/qrc/stop.png</file>
         <file alias="play">resources/qrc/play.png</file>
         <file alias="icon">resources/qrc/icon.png</file>
+		<file alias="menu">resources/qrc/menu.png</file>
 		<file alias="placeholder">resources/qrc/placeholder.png</file>
     </qresource>
 <!--    <qresource prefix="/doc">-->
