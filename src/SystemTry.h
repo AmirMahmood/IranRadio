@@ -18,6 +18,16 @@ Q_OBJECT
 public:
     explicit SystemTry(QObject *parent = nullptr);
 
+    enum TryClickAction{
+        PlayStop, ShowPlayerWin
+    };
+    Q_ENUM(TryClickAction)
+
+    enum Langs{
+        Fa, En
+    };
+    Q_ENUM(Langs)
+
 
 public slots:
 

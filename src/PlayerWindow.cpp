@@ -6,7 +6,7 @@
 #include <QMenu>
 
 #include "PlayerWindow.h"
-
+#include "SettingsDialog.h"
 #include "./ui_player_window.h"
 #include "NetworkManager.h"
 
@@ -145,5 +145,6 @@ void PlayerWindow::onRadioPlayerStateChanged(QMediaPlayer::State state) {
 }
 
 void PlayerWindow::showSettingsDialog() {
-
+    SettingsDialog settingsDialog(this);
+    settingsDialog.exec();
 }

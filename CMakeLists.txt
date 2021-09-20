@@ -24,7 +24,9 @@ set(PROJECT_SOURCES
         src/SystemTry.cpp
         src/NetworkManager.cpp
         src/CustomListWidgetItem.cpp
+        src/SettingsDialog.cpp
         src/player_window.ui
+        src/settings_dialog.ui
         resource.qrc
         ${TS_FILES}
         )
