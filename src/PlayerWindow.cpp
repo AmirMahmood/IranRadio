@@ -80,21 +80,34 @@ void PlayerWindow::saveWindowGeometry() {
     settings.setValue("size", size());
     settings.setValue("pos", pos());
     settings.endGroup();
+    qDebug() << "Player window's geometry is saved";
 }
 
 void PlayerWindow::closeEvent(QCloseEvent *event) {
     saveWindowGeometry();
     QMainWindow::closeEvent(event);
-    event->accept();
-    qDebug() << "Player windows is closed and its geometry is saved";
+
+    QSettings settings;
+    settings.beginGroup("settings");
+    if (!settings.value("exit-to-try", true).toBool()){
+        qApp->quit();
+    }
+    settings.endGroup();
 }
 
 void PlayerWindow::changeEvent(QEvent *event) {
     if (event->type() == QEvent::WindowStateChange) {
         if (windowState() & Qt::WindowMinimized) {
-            saveWindowGeometry();
-            event->ignore();
-            hide();
+            QSettings settings;
+            settings.beginGroup("settings");
+            if (settings.value("minimize-to-try", true).toBool()){
+                saveWindowGeometry();
+                event->ignore();
+                hide();
+            } else {
+                QMainWindow::changeEvent(event);
+            }
+            settings.endGroup();
         }
     }
 }

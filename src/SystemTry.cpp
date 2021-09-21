@@ -1,4 +1,5 @@
 #include <QApplication>
+#include <QSettings>
 
 #include "SystemTry.h"
 
@@ -104,10 +105,17 @@ void SystemTry::showPlayerWindow() {
 void SystemTry::tryIconClicked(QSystemTrayIcon::ActivationReason reason)
 {
     if (reason == QSystemTrayIcon::ActivationReason::Trigger){
-        if (playerWindow == nullptr){
-            showPlayerWindow();
+        QSettings settings;
+        settings.beginGroup("settings");
+        if (settings.value("try-clicked", TryClickAction::ShowPlayerWin) == TryClickAction::PlayStop){
+            RadioPlayer::getInstance()->toggleRadioPlayerState();
         } else {
-            playerWindow->onTryIconClicked();
+            if (playerWindow == nullptr){
+                showPlayerWindow();
+            } else {
+                playerWindow->onTryIconClicked();
+            }
         }
+        settings.endGroup();
     }
 }
