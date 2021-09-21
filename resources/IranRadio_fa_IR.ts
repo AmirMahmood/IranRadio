@@ -6,26 +6,36 @@
     <message>
         <location filename="../src/player_window.ui" line="14"/>
         <source>IranRadio</source>
-        <translation type="unfinished"></translation>
+        <translation>ایران رادیو</translation>
     </message>
     <message>
-        <location filename="../src/player_window.ui" line="92"/>
-        <location filename="../src/PlayerWindow.cpp" line="136"/>
+        <location filename="../src/player_window.ui" line="125"/>
+        <location filename="../src/PlayerWindow.cpp" line="155"/>
         <source>Play</source>
         <translation>پخش</translation>
     </message>
     <message>
-        <location filename="../src/player_window.ui" line="158"/>
+        <location filename="../src/player_window.ui" line="191"/>
         <source>رادیوهای سراسری</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/player_window.ui" line="179"/>
+        <location filename="../src/player_window.ui" line="212"/>
         <source>رادیوهای استانی</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/PlayerWindow.cpp" line="133"/>
+        <location filename="../src/PlayerWindow.cpp" line="20"/>
+        <source>Settings</source>
+        <translation>تنظیمات</translation>
+    </message>
+    <message>
+        <location filename="../src/PlayerWindow.cpp" line="21"/>
+        <source>Exit</source>
+        <translation>خروج</translation>
+    </message>
+    <message>
+        <location filename="../src/PlayerWindow.cpp" line="152"/>
         <source>Stop</source>
         <translation>توقف</translation>
     </message>
@@ -34,23 +44,23 @@
     <name>SettingsDialog</name>
     <message>
         <location filename="../src/settings_dialog.ui" line="14"/>
-        <source>Dialog</source>
-        <translation type="unfinished"></translation>
+        <source>Settings</source>
+        <translation>تنظیمات</translation>
     </message>
     <message>
         <location filename="../src/settings_dialog.ui" line="20"/>
-        <source>Language</source>
-        <translation type="unfinished"></translation>
+        <source>Language (Requires rerun)</source>
+        <translation>زبان (نیاز به راه‌اندازی مجدد)</translation>
     </message>
     <message>
         <location filename="../src/settings_dialog.ui" line="26"/>
         <source>Persian</source>
-        <translation type="unfinished"></translation>
+        <translation>فارسی</translation>
     </message>
     <message>
         <location filename="../src/settings_dialog.ui" line="33"/>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>انگلیسی</translation>
     </message>
     <message>
         <location filename="../src/settings_dialog.ui" line="43"/>
@@ -60,17 +70,17 @@
     <message>
         <location filename="../src/settings_dialog.ui" line="49"/>
         <source>Stop / Play</source>
-        <translation type="unfinished"></translation>
+        <translation>توقف / پخش</translation>
     </message>
     <message>
         <location filename="../src/settings_dialog.ui" line="56"/>
         <source>Show player window</source>
-        <translation type="unfinished"></translation>
+        <translation>نمایش پنجره پخش‌کننده</translation>
     </message>
     <message>
         <location filename="../src/settings_dialog.ui" line="66"/>
         <source>Player window</source>
-        <translation type="unfinished"></translation>
+        <translation>پنجره پخش‌کننده</translation>
     </message>
     <message>
         <location filename="../src/settings_dialog.ui" line="72"/>
@@ -86,38 +96,38 @@
 <context>
     <name>SystemTry</name>
     <message>
-        <location filename="../src/SystemTry.cpp" line="13"/>
-        <location filename="../src/SystemTry.cpp" line="89"/>
+        <location filename="../src/SystemTry.cpp" line="14"/>
+        <location filename="../src/SystemTry.cpp" line="92"/>
         <source>Play</source>
         <translation>پخش</translation>
     </message>
     <message>
-        <location filename="../src/SystemTry.cpp" line="16"/>
+        <location filename="../src/SystemTry.cpp" line="17"/>
         <source>Nationals</source>
         <translation>سراسری</translation>
     </message>
     <message>
-        <location filename="../src/SystemTry.cpp" line="17"/>
+        <location filename="../src/SystemTry.cpp" line="18"/>
         <source>Regionals</source>
         <translation>استانی</translation>
     </message>
     <message>
-        <location filename="../src/SystemTry.cpp" line="20"/>
+        <location filename="../src/SystemTry.cpp" line="21"/>
         <source>Change volume</source>
         <translation>میزان صدا</translation>
     </message>
     <message>
-        <location filename="../src/SystemTry.cpp" line="41"/>
+        <location filename="../src/SystemTry.cpp" line="42"/>
         <source>Show player</source>
         <translation>پنجره پخش‌کننده</translation>
     </message>
     <message>
-        <location filename="../src/SystemTry.cpp" line="42"/>
+        <location filename="../src/SystemTry.cpp" line="43"/>
         <source>Exit</source>
         <translation>خروج</translation>
     </message>
     <message>
-        <location filename="../src/SystemTry.cpp" line="86"/>
+        <location filename="../src/SystemTry.cpp" line="89"/>
         <source>Stop</source>
         <translation>توقف</translation>
     </message>
