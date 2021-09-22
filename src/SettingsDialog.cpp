@@ -22,6 +22,10 @@ SettingsDialog::SettingsDialog(QWidget *parent)
     QSettings settings;
     settings.beginGroup("settings");
 
+    if (settings.value("__current_lang", SystemTry::Langs::En) == SystemTry::Langs::Fa){
+        setLayoutDirection(Qt::LayoutDirection::RightToLeft);
+    }
+
     if (settings.value("lang", SystemTry::Langs::En) == SystemTry::Langs::En){
         ui->enRadioButton->setChecked(true);
     } else {

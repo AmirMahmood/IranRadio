@@ -15,11 +15,13 @@ int main(int argc, char *argv[]) {
 
     QSettings settings;
     settings.beginGroup("settings");
+    settings.setValue("__current_lang", SystemTry::Langs::En);
 
     QTranslator translator;
     if (settings.value("lang", SystemTry::Langs::En) == SystemTry::Langs::Fa){
         if (translator.load("IranRadio_fa_IR")){
             a.installTranslator(&translator);
+            settings.setValue("__current_lang", SystemTry::Langs::Fa);
         }
     }
 
