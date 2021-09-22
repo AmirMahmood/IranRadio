@@ -1,4 +1,6 @@
 #include <QApplication>
+#include <QTranslator>
+#include <QSettings>
 
 #include "SystemTry.h"
 
@@ -9,7 +11,19 @@ int main(int argc, char *argv[]) {
     QApplication::setQuitOnLastWindowClosed(false);
     QCoreApplication::setOrganizationName("IranRadio");
     QCoreApplication::setOrganizationDomain("https://github.com/AmirMahmood");
-    QCoreApplication::setApplicationName("IranRadio");;
+    QCoreApplication::setApplicationName("IranRadio");
+
+    QSettings settings;
+    settings.beginGroup("settings");
+
+    QTranslator translator;
+    if (settings.value("lang", SystemTry::Langs::En) == SystemTry::Langs::Fa){
+        if (translator.load("IranRadio_fa_IR")){
+            a.installTranslator(&translator);
+        }
+    }
+
+    settings.endGroup();
 
     PlayList::getInstance();  // init PlayList;
     RadioPlayer::getInstance();  // init RadioPlayer
