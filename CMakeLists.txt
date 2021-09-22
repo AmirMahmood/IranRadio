@@ -14,7 +14,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets Multimedia LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets Multimedia LinguistTools REQUIRED)
 
-set(TS_FILES ./resources/IranRadio_fa_IR.ts)
+set(TS_FILES ${CMAKE_SOURCE_DIR}/resources/IranRadio_fa_IR.ts)
 
 set(PROJECT_SOURCES
         src/main.cpp
@@ -44,11 +44,13 @@ else ()
     if (WIN32)
         add_executable(IranRadio WIN32
                 ${PROJECT_SOURCES}
-                ./resources/win32IranRadio.rc
+                ${CMAKE_SOURCE_DIR}/resources/win32IranRadio.rc
+                ${QM_FILES}
                 )
     else()
         add_executable(IranRadio
                 ${PROJECT_SOURCES}
+                ${QM_FILES}
                 )
     endif ()
 endif ()
