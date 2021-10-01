@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <QTranslator>
 #include <QSettings>
+#include <QFontDatabase>
 
 #include "SystemTry.h"
 
@@ -12,6 +13,13 @@ int main(int argc, char *argv[]) {
     QCoreApplication::setOrganizationName("IranRadio");
     QCoreApplication::setOrganizationDomain("https://github.com/AmirMahmood");
     QCoreApplication::setApplicationName("IranRadio");
+
+
+    auto font = QFont("Vazir UI", 9);
+    if (font.exactMatch()){
+        qDebug() << "Vazir UI font is available";
+        a.setFont(font);
+    }
 
     QSettings settings;
     settings.beginGroup("settings");
