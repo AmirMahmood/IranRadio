@@ -56,6 +56,14 @@ SystemTry::SystemTry(QObject *parent) {
     trayIcon->setContextMenu(trayMenu);
 
     trayIcon->show();
+
+    QSettings settings;
+    settings.beginGroup("settings");
+    if (settings.value("__first_run", true).toBool()){
+        showPlayerWindow();
+        settings.setValue("__first_run", false);
+    }
+    settings.endGroup();
 }
 
 void SystemTry::onRadioStationChanged(const RadioStation &rs) {
