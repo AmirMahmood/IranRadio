@@ -8,6 +8,11 @@
 این برنامه نسخه غیررسمی [ایران صدا][1] است و از API های ایران صدا استفاده می‌کند.
 
 
+## دانلود برنامه
+
+* [Windows x64][3]
+
+تمامی نسخه‌های ایران رادیو در [صفحه دانلود برنامه][3] در دسترس هستند.
     
 ## تصاویر برنامه
 
@@ -25,7 +30,8 @@
 
 
 [1]: http://iranseda.ir/
-[2]: https://github.com/AmirMahmood/IranRadio/blob/main/LICENSE
+[2]: https://github.com/AmirMahmood/IranRadio/blob/main/LICENSE  
+[3]: https://github.com/AmirMahmood/IranRadio/releases/download/v0.8.0/IranRadio-x64-v0.8.0.exe
 
 
 </div>
