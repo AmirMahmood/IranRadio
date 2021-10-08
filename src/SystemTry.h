@@ -35,9 +35,9 @@ public slots:
 
     void onRadioPlayerStateChanged(QMediaPlayer::State state);
 
-private slots:
-
     void showPlayerWindow();
+
+private slots:
 
     void tryIconClicked(QSystemTrayIcon::ActivationReason reason);
 

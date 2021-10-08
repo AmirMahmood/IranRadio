@@ -3,11 +3,13 @@
 #include <QSettings>
 #include <QFontDatabase>
 
+#include <singleapplication.h>
+
 #include "SystemTry.h"
 
 
 int main(int argc, char *argv[]) {
-    QApplication a(argc, argv);
+    SingleApplication a(argc, argv);
 
     QApplication::setQuitOnLastWindowClosed(false);
     QCoreApplication::setOrganizationName("IranRadio");
@@ -40,5 +42,12 @@ int main(int argc, char *argv[]) {
 
     SystemTry systemTry;
 
-    return QApplication::exec();
+    QObject::connect(
+        &a,
+        &SingleApplication::instanceStarted,
+        &systemTry,
+        &SystemTry::showPlayerWindow
+    );
+
+    return a.exec();
 }

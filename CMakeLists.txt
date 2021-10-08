@@ -55,6 +55,10 @@ else ()
     endif ()
 endif ()
 
+set(QAPPLICATION_CLASS QApplication CACHE STRING "Inheritance class for SingleApplication")
+add_subdirectory(${CMAKE_SOURCE_DIR}/src/singleapplication)
+target_link_libraries(IranRadio PRIVATE SingleApplication::SingleApplication)
+
 target_link_libraries(IranRadio PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Multimedia)
 
 if (CLION)
